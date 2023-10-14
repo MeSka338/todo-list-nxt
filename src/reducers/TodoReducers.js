@@ -12,6 +12,8 @@ const TodoReducer = (state = { todos: [] }, action) => {
       return { todos: action.payload };
     case "REMOVE_COMPLITED_TODO":
       return { todos: action.payload };
+    case "UPDATE_LOCAL":
+      return { todos: action.payload };
 
     default:
       return state;

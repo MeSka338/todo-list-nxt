@@ -1,10 +1,8 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import {
-  AddTodoAction,
   DoneTodoAction,
   EditTodoAction,
-  RemoveComplitedAction,
   RemoveTodoAction,
 } from "@/actions/TodoActions";
 import s from "./TodoItem.module.scss";
@@ -18,12 +16,10 @@ const TodoItem = ({ item }) => {
 
   const doneTask = (t) => {
     dispatch(DoneTodoAction(t));
-    console.log("check");
   };
 
   const edit = (t) => {
     dispatch(EditTodoAction(t));
-    console.log(t);
   };
 
   return (
@@ -42,21 +38,29 @@ const TodoItem = ({ item }) => {
           style={item.checked ? { opacity: "1" } : { opacity: "0" }}
         ></span>
       </label>
-      <input
-        type="text"
-        readOnly={false}
-        className={s.todo_item__value}
-        style={
-          item.checked
-            ? {
-                textDecoration: "line-through",
-                color: "gray",
-              }
-            : { textDecoration: "none " }
-        }
-        value={item.text}
-        onDoubleClick={() => edit(t)}
-      ></input>
+      {item.edit ? (
+        <input
+          type="text"
+          value={item.value}
+          className={s.todo_item__value}
+        ></input>
+      ) : (
+        <p
+          className={s.todo_item__value}
+          style={
+            item.checked
+              ? {
+                  textDecoration: "line-through",
+                  color: "gray",
+                }
+              : { textDecoration: "none " }
+          }
+          onDoubleClick={() => edit(item)}
+        >
+          {item.text}
+        </p>
+      )}
+
       <button
         className={`${s.todo_item__remove} ${s.button}`}
         onClick={() => removeHandler(item)}

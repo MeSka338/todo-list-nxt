@@ -1,10 +1,11 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import s from "./HomePage.module.scss";
 import { useDispatch, useSelector } from "react-redux";
 import {
   AddTodoAction,
   RemoveComplitedAction,
   DoneAllTodoAction,
+  UpdateLocal,
 } from "@/actions/TodoActions";
 import TodoItem from "@/components/common/TodoItem";
 
@@ -12,24 +13,23 @@ const HomePage = () => {
   const [newTodo, setNewTodo] = useState({});
   const [filter, setFilter] = useState(0);
   const [mode, setMode] = useState(true);
+  const [localState, setLocalState] = useState();
 
   const input = useRef();
   const dispatch = useDispatch();
   const Todo = useSelector((state) => state.Todo);
 
-  const { todos } = Todo;
+  let { todos } = Todo;
+  // console.log(todos);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
     dispatch(AddTodoAction(newTodo));
-
     input.current.value = "";
   };
 
   const removeComlited = () => {
     dispatch(RemoveComplitedAction());
-    console.log("work");
   };
 
   const handleChange = (e) => {
@@ -48,6 +48,12 @@ const HomePage = () => {
       console.log("work");
     }
   };
+
+  useEffect(() => {
+    if (localStorage.getItem("todos")) {
+      dispatch(UpdateLocal(JSON.parse(localStorage.getItem("todos"))));
+    }
+  }, []);
 
   return (
     <section className={s.todoApp}>
