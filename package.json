@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@react-three/fiber": "^8.14.5",
     "next": "13.5.4",
     "react": "^18",
     "react-dom": "^18",
@@ -16,6 +17,7 @@
     "redux": "^4.2.1",
     "redux-devtools-extension": "^2.13.9",
     "redux-thunk": "^2.4.2",
-    "sass": "^1.69.0"
+    "sass": "^1.69.0",
+    "three": "^0.157.0"
   }
 }

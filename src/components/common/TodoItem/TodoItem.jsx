@@ -1,25 +1,41 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
 import {
   DoneTodoAction,
   EditTodoAction,
   RemoveTodoAction,
+  EditTextAction,
+  UnEditTodoAction,
 } from "@/actions/TodoActions";
 import s from "./TodoItem.module.scss";
 
 const TodoItem = ({ item }) => {
   const dispatch = useDispatch();
+  const todoInput = useRef();
 
   const removeHandler = (t) => {
     dispatch(RemoveTodoAction(t));
   };
-
+  // window.addEventListener("click", () => {
+  //   console.log("workx");
+  //   unedit(item);
+  // });
   const doneTask = (t) => {
     dispatch(DoneTodoAction(t));
   };
 
   const edit = (t) => {
     dispatch(EditTodoAction(t));
+  };
+
+  const unedit = (t) => {
+    dispatch(UnEditTodoAction(t));
+  };
+  const handleChange = (e) => {
+    item.text = e.target.value;
+    dispatch(EditTextAction(item));
+
+    console.log(item.text);
   };
 
   return (
@@ -41,8 +57,10 @@ const TodoItem = ({ item }) => {
       {item.edit ? (
         <input
           type="text"
-          value={item.value}
+          value={item.text}
           className={s.todo_item__value}
+          onChange={handleChange}
+          ref={todoInput}
         ></input>
       ) : (
         <p

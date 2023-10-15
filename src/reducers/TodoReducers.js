@@ -10,6 +10,10 @@ const TodoReducer = (state = { todos: [] }, action) => {
       return { todos: action.payload };
     case "EDIT_TODO":
       return { todos: action.payload };
+    case "UNEDIT_TODO":
+      return { todos: action.payload };
+    case "EDIT_TEXT":
+      return { todos: action.payload };
     case "REMOVE_COMPLITED_TODO":
       return { todos: action.payload };
     case "UPDATE_LOCAL":

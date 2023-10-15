@@ -89,18 +89,54 @@ export const EditTodoAction = (todo) => (dispatch, getState) => {
 
   todos.forEach((item) => {
     if (item.id === todo.id) {
-      item.edit = !item.edit;
+      item.edit = true;
     }
   });
   dispatch({
-    type: "DONE_TODO",
+    type: "EDIT_TODO",
     payload: [...todos],
   });
 
   localStorage.setItem("todos", JSON.stringify(todos));
 };
 
-export const UpdateLocal = (todo) => (dispatch, getState) => {
+export const UnEditTodoAction = (todo) => (dispatch, getState) => {
+  const {
+    Todo: { todos },
+  } = getState();
+
+  todos.forEach((item) => {
+    if (item.id === todo.id) {
+      item.edit = false;
+    }
+  });
+  dispatch({
+    type: "UNEDIT_TODO",
+    payload: [...todos],
+  });
+
+  localStorage.setItem("todos", JSON.stringify(todos));
+};
+
+export const EditTextAction = (todo) => (dispatch, getState) => {
+  const {
+    Todo: { todos },
+  } = getState();
+  todos.forEach((item) => {
+    if (item.id === todo.id) {
+      item.text = todo.text;
+    }
+  });
+
+  dispatch({
+    type: "EDIT_TEXT",
+    payload: [...todos],
+  });
+
+  localStorage.setItem("todos", JSON.stringify(todos));
+};
+
+export const UpdateLocal = (todo) => (dispatch) => {
   dispatch({
     type: "UPDATE_LOCAL",
     payload: [...todo],

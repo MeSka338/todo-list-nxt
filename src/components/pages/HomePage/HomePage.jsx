@@ -13,14 +13,12 @@ const HomePage = () => {
   const [newTodo, setNewTodo] = useState({});
   const [filter, setFilter] = useState(0);
   const [mode, setMode] = useState(true);
-  const [localState, setLocalState] = useState();
 
   const input = useRef();
   const dispatch = useDispatch();
   const Todo = useSelector((state) => state.Todo);
 
-  let { todos } = Todo;
-  // console.log(todos);
+  const { todos } = Todo;
 
   const handleSubmit = (e) => {
     e.preventDefault();
