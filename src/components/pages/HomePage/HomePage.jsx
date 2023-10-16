@@ -8,6 +8,7 @@ import {
   UpdateLocal,
 } from "@/actions/TodoActions";
 import TodoItem from "@/components/common/TodoItem";
+import Animation from "@/components/common/Animation";
 
 const HomePage = () => {
   const [newTodo, setNewTodo] = useState({});
@@ -54,74 +55,77 @@ const HomePage = () => {
   }, []);
 
   return (
-    <section className={s.todoApp}>
-      <div className={s.todos}>
-        <form className={s.todo_form} onSubmit={handleSubmit}>
-          <button
-            type="button"
-            className={`${s.todo_form__sellectAll} ${s.button}`}
-            onClick={sellectAll}
-          >
-            <img src="/arrow.svg" alt="arrow" />
-          </button>
-          <input
-            type="text"
-            placeholder="What need to be done?"
-            className={s.todos__input}
-            id="todosInput"
-            required
-            onChange={handleChange}
-            ref={input}
-          />
-        </form>
-        <ul className={s.todos__list}></ul>
-        {todos &&
-          todos.map((t) => {
-            if (filter === 0) {
-              return <TodoItem item={t} />;
-            } else if (filter === 1 && t.checked === false) {
-              return <TodoItem item={t} />;
-            } else if (filter === 2 && t.checked === true) {
-              return <TodoItem item={t} />;
-            }
-          })}
-        <div className={s.todos__menu}>
-          <p className={s.todos_count}>{todos.length} items</p>
-          <div className={s.todos_pages}>
+    <>
+      <section className={s.todoApp}>
+        <div className={s.todos}>
+          <form className={s.todo_form} onSubmit={handleSubmit}>
             <button
-              className={s.page}
-              onClick={() => {
-                setFilter(0);
-              }}
+              type="button"
+              className={`${s.todo_form__sellectAll} ${s.button}`}
+              onClick={sellectAll}
             >
-              ALL
+              <img src="/arrow.svg" alt="arrow" />
             </button>
-            <button
-              className={s.page}
-              onClick={() => {
-                setFilter(1);
-              }}
-            >
-              Active
-            </button>
-            <button
-              className={s.page}
-              onClick={() => {
-                setFilter(2);
-              }}
-            >
-              Complited
-            </button>
-          </div>
-          <button
-            className={`${s.clear_todos} ${s.page}`}
-            onClick={removeComlited}
-          >
-            Clear complited
-          </button>
+            <input
+              type="text"
+              placeholder="What need to be done?"
+              className={s.todos__input}
+              id="todosInput"
+              required
+              onChange={handleChange}
+              ref={input}
+            />
+          </form>
+          <ul className={s.todos__list}>
+            {todos &&
+              todos.map((t) => {
+                if (filter === 0) {
+                  return <TodoItem item={t} />;
+                } else if (filter === 1 && t.checked === false) {
+                  return <TodoItem item={t} />;
+                } else if (filter === 2 && t.checked === true) {
+                  return <TodoItem item={t} />;
+                }
+              })}
+            <div className={s.todos__menu}>
+              <p className={s.todos_count}>{todos.length} items</p>
+              <div className={s.todos_pages}>
+                <button
+                  className={s.page}
+                  onClick={() => {
+                    setFilter(0);
+                  }}
+                >
+                  ALL
+                </button>
+                <button
+                  className={s.page}
+                  onClick={() => {
+                    setFilter(1);
+                  }}
+                >
+                  Active
+                </button>
+                <button
+                  className={s.page}
+                  onClick={() => {
+                    setFilter(2);
+                  }}
+                >
+                  Complited
+                </button>
+              </div>
+              <button
+                className={`${s.clear_todos} ${s.page}`}
+                onClick={removeComlited}
+              >
+                Clear complited
+              </button>
+            </div>
+          </ul>
         </div>
-      </div>
-    </section>
+      </section>
+    </>
   );
 };
 
