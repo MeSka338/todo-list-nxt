@@ -10,6 +10,7 @@ import {
   Text3D,
   Center,
 } from "@react-three/drei";
+import { useDispatch } from "react-redux";
 
 const MyText = () => {
   return (

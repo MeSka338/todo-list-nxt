@@ -3,7 +3,6 @@ export const AddTodoAction = (todo) => (dispatch, getState) => {
     Todo: { todos },
   } = getState();
 
-  // const hasTodo = todos.find((item) => item.text === todo.text);
   if (todo.text !== "") {
     dispatch({
       type: "ADD_TODO",
@@ -100,15 +99,13 @@ export const EditTodoAction = (todo) => (dispatch, getState) => {
   localStorage.setItem("todos", JSON.stringify(todos));
 };
 
-export const UnEditTodoAction = (todo) => (dispatch, getState) => {
+export const UnEditTodoAction = () => (dispatch, getState) => {
   const {
     Todo: { todos },
   } = getState();
 
   todos.forEach((item) => {
-    if (item.id === todo.id) {
-      item.edit = false;
-    }
+    item.edit = false;
   });
   dispatch({
     type: "UNEDIT_TODO",

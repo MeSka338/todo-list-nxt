@@ -5,21 +5,21 @@ import {
   AddTodoAction,
   RemoveComplitedAction,
   DoneAllTodoAction,
+  UnEditTodoAction,
   UpdateLocal,
 } from "@/actions/TodoActions";
 import TodoItem from "@/components/common/TodoItem";
-import Animation from "@/components/common/Animation";
 
 const HomePage = () => {
   const [newTodo, setNewTodo] = useState({});
   const [filter, setFilter] = useState(0);
   const [mode, setMode] = useState(true);
-
   const input = useRef();
   const dispatch = useDispatch();
   const Todo = useSelector((state) => state.Todo);
-
+  const Input = useSelector((state) => state.Input);
   const { todos } = Todo;
+  const { text } = Input;
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -48,6 +48,12 @@ const HomePage = () => {
     }
   };
 
+  const saveEdit = (e) => {
+    if (e.target !== text) {
+      dispatch(UnEditTodoAction());
+    }
+  };
+
   useEffect(() => {
     if (localStorage.getItem("todos")) {
       dispatch(UpdateLocal(JSON.parse(localStorage.getItem("todos"))));
@@ -56,7 +62,7 @@ const HomePage = () => {
 
   return (
     <>
-      <section className={s.todoApp}>
+      <section className={s.todoApp} onClick={(e) => saveEdit(e)}>
         <div className={s.todos}>
           <form className={s.todo_form} onSubmit={handleSubmit}>
             <button
