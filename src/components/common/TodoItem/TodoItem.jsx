@@ -1,46 +1,18 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { UnEditTodoAction } from "@/actions/TodoActions";
 import {
-  DoneTodoAction,
-  EditTodoAction,
-  RemoveTodoAction,
-  EditTextAction,
-  UnEditTodoAction,
-} from "@/actions/TodoActions";
+  removeHandler,
+  doneTask,
+  edit,
+  handleChange,
+  setInput,
+} from "./TodoItemFunctions";
+
 import s from "./TodoItem.module.scss";
-let timeout;
 
 const TodoItem = ({ item }) => {
   const dispatch = useDispatch();
-
-  const removeHandler = (t) => {
-    dispatch(RemoveTodoAction(t));
-  };
-
-  const doneTask = () => {
-    dispatch(DoneTodoAction(item));
-    if (item.checked) {
-      clearTimeout(timeout);
-      dispatch({ type: "TRUE_DONE", payload: true });
-
-      timeout = setTimeout(() => {
-        dispatch({ type: "TRUE_DONE", payload: false });
-      }, 3000);
-    }
-  };
-
-  const edit = () => {
-    dispatch(EditTodoAction(item));
-  };
-
-  const handleChange = (e) => {
-    item.text = e.target.value;
-    dispatch(EditTextAction(item));
-  };
-
-  const setInput = (e) => {
-    dispatch({ type: "SET_INPUT", payload: e.target });
-  };
 
   return (
     <li
@@ -50,7 +22,7 @@ const TodoItem = ({ item }) => {
           ? { border: "solid 1px gray" }
           : { borderTop: "1px solid #ebdcdc" }
       }
-      onClick={(e) => setInput(e)}
+      onClick={(e) => setInput(dispatch, e)}
       onKeyPress={(e) => {
         if (e.key === "Enter" && item.edit) {
           dispatch(UnEditTodoAction());
@@ -63,7 +35,7 @@ const TodoItem = ({ item }) => {
         name="checked"
         id={"checked" + item.id}
         defaultChecked={item.checked ? true : false}
-        onClick={doneTask}
+        onClick={() => doneTask(dispatch, item)}
       />
       <label
         htmlFor={"checked" + item.id}
@@ -78,8 +50,8 @@ const TodoItem = ({ item }) => {
         type="text"
         value={item.text}
         className={s.todo_item__value}
-        onChange={handleChange}
-        onDoubleClick={() => edit(item)}
+        onChange={(e) => handleChange(dispatch, item, e)}
+        onDoubleClick={() => edit(dispatch, item)}
         readOnly={item.edit ? false : true}
         style={
           item.checked
@@ -95,7 +67,7 @@ const TodoItem = ({ item }) => {
         className={
           item.edit ? `${s.edit}` : `${s.todo_item__remove} ${s.button}`
         }
-        onClick={() => removeHandler(item)}
+        onClick={() => removeHandler(dispatch, item)}
       >
         <img src="/close.svg" alt="rem"></img>
       </button>

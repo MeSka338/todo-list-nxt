@@ -1,13 +1,16 @@
 import React, { useState, useRef, useEffect } from "react";
-import s from "./Todo.module.scss";
 import { useDispatch, useSelector } from "react-redux";
+import { UpdateLocal } from "@/actions/TodoActions";
 import {
-  AddTodoAction,
-  RemoveComplitedAction,
-  DoneAllTodoAction,
-  UnEditTodoAction,
-  UpdateLocal,
-} from "@/actions/TodoActions";
+  handleSubmit,
+  removeComlited,
+  handleChange,
+  sellectAll,
+  saveEdit,
+} from "./TodoFunctions";
+
+import s from "./Todo.module.scss";
+
 import TodoItem from "@/components/common/TodoItem";
 
 const Todo = () => {
@@ -21,39 +24,6 @@ const Todo = () => {
   const { todos } = useSelector((state) => state.Todo);
   const { text } = useSelector((state) => state.Input);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    dispatch(AddTodoAction(newTodo));
-    input.current.value = "";
-  };
-
-  const removeComlited = () => {
-    dispatch(RemoveComplitedAction());
-  };
-
-  const handleChange = (e) => {
-    setNewTodo({
-      text: e.target.value,
-      checked: false,
-      edit: false,
-      id: Date.now(),
-    });
-  };
-
-  const sellectAll = () => {
-    if (todos.length !== 0) {
-      setMode((current) => !current);
-      dispatch(DoneAllTodoAction(mode));
-      console.log("work");
-    }
-  };
-
-  const saveEdit = (e) => {
-    if (e.target !== text) {
-      dispatch(UnEditTodoAction());
-    }
-  };
-
   useEffect(() => {
     if (localStorage.getItem("todos")) {
       dispatch(UpdateLocal(JSON.parse(localStorage.getItem("todos"))));
@@ -62,13 +32,19 @@ const Todo = () => {
 
   return (
     <>
-      <section className={s.todoApp} onClick={(e) => saveEdit(e)}>
+      <section
+        className={s.todoApp}
+        onClick={(e) => saveEdit(e, text, dispatch)}
+      >
         <div className={s.todos}>
-          <form className={s.todo_form} onSubmit={handleSubmit}>
+          <form
+            className={s.todo_form}
+            onSubmit={(e) => handleSubmit(e, newTodo, input, dispatch)}
+          >
             <button
               type="button"
               className={`${s.todo_form__sellectAll} ${s.button}`}
-              onClick={sellectAll}
+              onClick={() => sellectAll(todos, setMode, mode, dispatch)}
             >
               <img src="/arrow.svg" alt="arrow" />
             </button>
@@ -78,7 +54,7 @@ const Todo = () => {
               className={s.todos__input}
               id="todosInput"
               required
-              onChange={handleChange}
+              onChange={(e) => handleChange(e, setNewTodo, dispatch)}
               ref={input}
             />
           </form>
@@ -123,7 +99,7 @@ const Todo = () => {
               </div>
               <button
                 className={`${s.clear_todos} ${s.page}`}
-                onClick={removeComlited}
+                onClick={() => removeComlited(dispatch)}
               >
                 Clear complited
               </button>
