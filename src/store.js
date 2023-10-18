@@ -4,10 +4,12 @@ import thunk from "redux-thunk";
 import TodoReducer from "./reducers/TodoReducers";
 import InputReducer from "./reducers/InputReducer";
 import DoneTriggerReducer from "./reducers/DoneTriggerReducer";
+import MouseReducer from "./reducers/MouseReducer";
 const reduser = combineReducers({
   Todo: TodoReducer,
   Input: InputReducer,
   DoneTrigger: DoneTriggerReducer,
+  Mouse: MouseReducer,
 });
 
 const initialState = {};

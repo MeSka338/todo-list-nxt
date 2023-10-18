@@ -14,7 +14,8 @@ for (let i = 0; i < 1000; i++) {
   ]);
 }
 const Rig = () => {
-  const { camera, mouse } = useThree();
+  const { camera } = useThree();
+  const { mouse } = useSelector((state) => state.Mouse);
   const vec = new Vector3();
 
   return useFrame(() => {
