@@ -5,6 +5,14 @@ import { Points, Point, useTexture, Text3D, Center } from "@react-three/drei";
 import { useDispatch, useSelector } from "react-redux";
 import { Vector3 } from "three";
 
+const pointArray = [];
+for (let i = 0; i < 1000; i++) {
+  pointArray.push([
+    (Math.random() - 0.5) * 200,
+    (Math.random() - 0.5) * 200,
+    (Math.random() - 0.5) * 200,
+  ]);
+}
 const Rig = () => {
   const { camera, mouse } = useThree();
   const vec = new Vector3();
@@ -27,9 +35,9 @@ const MyText = () => {
         height={0.5}
         lineHeight={0.5}
         letterSpacing={-0.06}
-        size={0.8}
+        size={0.5}
       >
-        todos
+        TODOS
         <meshNormalMaterial />
       </Text3D>
     </Center>
@@ -40,15 +48,6 @@ const Particles = () => {
 
   const ref = useRef();
   const circle = useTexture("/circle.png");
-
-  const pointArray = [];
-  for (let i = 0; i < 1000; i++) {
-    pointArray.push([
-      (Math.random() - 0.5) * 200,
-      (Math.random() - 0.5) * 200,
-      (Math.random() - 0.5) * 200,
-    ]);
-  }
 
   return (
     <Points>

@@ -8,6 +8,7 @@ import {
   UnEditTodoAction,
 } from "@/actions/TodoActions";
 import s from "./TodoItem.module.scss";
+let timeout;
 
 const TodoItem = ({ item }) => {
   const DoneTrigger = useSelector((store) => store.DoneTrigger);
@@ -18,7 +19,6 @@ const TodoItem = ({ item }) => {
   };
 
   const doneTask = () => {
-    let timeout;
     dispatch(DoneTodoAction(item));
     if (item.checked) {
       clearTimeout(timeout);
