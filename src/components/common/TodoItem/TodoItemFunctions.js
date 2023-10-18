@@ -3,7 +3,6 @@ import {
   EditTodoAction,
   RemoveTodoAction,
   EditTextAction,
-  UnEditTodoAction,
 } from "@/actions/TodoActions";
 
 let timeout;
@@ -12,10 +11,10 @@ export const doneTask = (dispatch, item) => {
   dispatch(DoneTodoAction(item));
   if (item.checked) {
     clearTimeout(timeout);
-    dispatch({ type: "TRUE_DONE", payload: true });
+    dispatch({ type: "SET_DONE", payload: true });
 
     timeout = setTimeout(() => {
-      dispatch({ type: "TRUE_DONE", payload: false });
+      dispatch({ type: "SET_DONE", payload: false });
     }, 3000);
   }
 };

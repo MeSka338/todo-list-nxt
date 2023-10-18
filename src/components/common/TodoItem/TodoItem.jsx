@@ -16,11 +16,8 @@ const TodoItem = ({ item }) => {
 
   return (
     <li
-      className={s.todo_item}
-      style={
-        item.edit
-          ? { border: "solid 1px gray" }
-          : { borderTop: "1px solid #ebdcdc" }
+      className={
+        item.edit ? `${s.todo_item} ${s.todo_item_edit}` : `${s.todo_item}`
       }
       onClick={(e) => setInput(dispatch, e)}
       onKeyPress={(e) => {
@@ -42,24 +39,19 @@ const TodoItem = ({ item }) => {
         className={item.edit ? `${s.edit}` : s.fake_checked}
       >
         <span
-          className={s.check}
-          style={item.checked ? { opacity: "1" } : { opacity: "0" }}
+          className={item.checked ? `${s.check} ${s.check_edit}` : `${s.check}`}
         ></span>
       </label>
       <input
         type="text"
         value={item.text}
-        className={s.todo_item__value}
         onChange={(e) => handleChange(dispatch, item, e)}
         onDoubleClick={() => edit(dispatch, item)}
         readOnly={item.edit ? false : true}
-        style={
+        className={
           item.checked
-            ? {
-                textDecoration: "line-through",
-                color: "gray",
-              }
-            : { textDecoration: "none " }
+            ? `${s.todo_item__value} ${s.todo_item__value_edit}`
+            : `${s.todo_item__value} `
         }
       ></input>
 

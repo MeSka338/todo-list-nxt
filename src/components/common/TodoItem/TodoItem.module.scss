@@ -3,7 +3,12 @@
   align-items: center;
   border-top: 1px solid #ebdcdc;
   background: white;
+
+  &_edit {
+    border: solid 1px gray;
+  }
 }
+
 .edit {
   display: none;
 }
@@ -36,8 +41,11 @@
   height: 7px;
 
   position: absolute;
+  opacity: 0;
 
-  // opacity: 1;
+  &_checked {
+    opacity: 1;
+  }
 }
 
 .todo_item__value {
@@ -49,6 +57,11 @@
   word-wrap: break-word;
 
   cursor: default;
+
+  &_checked {
+    text-decoration: line-through;
+    color: "gray";
+  }
 }
 
 .todo_item__value:focus {
