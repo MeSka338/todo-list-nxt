@@ -11,7 +11,6 @@ import s from "./TodoItem.module.scss";
 let timeout;
 
 const TodoItem = ({ item }) => {
-  const DoneTrigger = useSelector((store) => store.DoneTrigger);
   const dispatch = useDispatch();
 
   const removeHandler = (t) => {
@@ -38,6 +37,7 @@ const TodoItem = ({ item }) => {
     item.text = e.target.value;
     dispatch(EditTextAction(item));
   };
+
   const setInput = (e) => {
     dispatch({ type: "SET_INPUT", payload: e.target });
   };
