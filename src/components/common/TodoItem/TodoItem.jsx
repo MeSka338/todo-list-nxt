@@ -23,11 +23,9 @@ const TodoItem = ({ item }) => {
     if (item.checked) {
       clearTimeout(timeout);
       dispatch({ type: "TRUE_DONE", payload: true });
-      // console.log(DoneTrigger);
 
       timeout = setTimeout(() => {
         dispatch({ type: "TRUE_DONE", payload: false });
-        // console.log(DoneTrigger);
       }, 3000);
     }
   };
@@ -47,7 +45,11 @@ const TodoItem = ({ item }) => {
   return (
     <li
       className={s.todo_item}
-      style={item.edit ? { border: "solid 1px gray" } : { border: "none" }}
+      style={
+        item.edit
+          ? { border: "solid 1px gray" }
+          : { borderTop: "1px solid #ebdcdc" }
+      }
       onClick={(e) => setInput(e)}
       onKeyPress={(e) => {
         if (e.key === "Enter" && item.edit) {
