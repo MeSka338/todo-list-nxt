@@ -84,13 +84,13 @@ const Todo = () => {
           </form>
           <ul className={s.todos__list}>
             {todos &&
-              todos.map((t) => {
+              todos.map((t, key) => {
                 if (filter === 0) {
-                  return <TodoItem item={t} />;
+                  return <TodoItem item={t} key={key} />;
                 } else if (filter === 1 && t.checked === false) {
-                  return <TodoItem item={t} />;
+                  return <TodoItem item={t} key={key} />;
                 } else if (filter === 2 && t.checked === true) {
-                  return <TodoItem item={t} />;
+                  return <TodoItem item={t} key={key} />;
                 }
               })}
             <div className={s.todos__menu}>

@@ -62,11 +62,11 @@ const TodoItem = ({ item }) => {
         className={s.todo_item__checked}
         name="checked"
         id={"checked" + item.id}
-        checked={item.checked ? true : false}
+        defaultChecked={item.checked ? true : false}
         onClick={doneTask}
       />
       <label
-        for={"checked" + item.id}
+        htmlFor={"checked" + item.id}
         className={item.edit ? `${s.edit}` : s.fake_checked}
       >
         <span
