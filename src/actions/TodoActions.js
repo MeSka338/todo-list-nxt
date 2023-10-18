@@ -133,9 +133,12 @@ export const EditTextAction = (todo) => (dispatch, getState) => {
   localStorage.setItem("todos", JSON.stringify(todos));
 };
 
-export const UpdateLocal = (todo) => (dispatch) => {
+export const UpdateLocal = (todos) => (dispatch) => {
+  todos.forEach((item) => {
+    item.edit = false;
+  });
   dispatch({
     type: "UPDATE_LOCAL",
-    payload: [...todo],
+    payload: [...todos],
   });
 };

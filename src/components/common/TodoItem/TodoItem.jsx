@@ -5,6 +5,7 @@ import {
   EditTodoAction,
   RemoveTodoAction,
   EditTextAction,
+  UnEditTodoAction,
 } from "@/actions/TodoActions";
 import s from "./TodoItem.module.scss";
 
@@ -36,6 +37,11 @@ const TodoItem = ({ item }) => {
       className={s.todo_item}
       style={item.edit ? { border: "solid 1px gray" } : { border: "none" }}
       onClick={(e) => setInput(e)}
+      onKeyPress={(e) => {
+        if (e.key === "Enter" && item.edit) {
+          dispatch(UnEditTodoAction());
+        }
+      }}
     >
       <input
         type="checkbox"
