@@ -1,9 +1,8 @@
 import React, { useRef } from "react";
-import { Canvas } from "@react-three/fiber";
+import { Canvas, useThree, useFrame } from "@react-three/fiber";
 import s from "./Animation.module.scss";
 import {
   OrbitControls,
-  PerspectiveCamera,
   Points,
   Point,
   useTexture,
@@ -11,6 +10,17 @@ import {
   Center,
 } from "@react-three/drei";
 import { useDispatch } from "react-redux";
+import { Vector3 } from "three";
+
+const Rig = () => {
+  const { camera, mouse } = useThree();
+  const vec = new Vector3();
+
+  return useFrame(() => {
+    camera.position.lerp(vec.set(mouse.x, mouse.y, camera.position.z), 0.05);
+    camera.lookAt(0, 0, 0);
+  });
+};
 
 const MyText = () => {
   return (
@@ -57,13 +67,10 @@ const Animation = () => {
   return (
     <div className={s.root}>
       <Canvas>
-        <mesh position={[0, 0, 0]}>
-          <boxGeometry />
-          <meshBasicMaterial args={[{ color: 0xff0000 }]} />
-        </mesh>
         <Particles />
         <MyText />
-        <OrbitControls />
+        <Rig />
+        {/* <OrbitControls /> */}
       </Canvas>
     </div>
   );
