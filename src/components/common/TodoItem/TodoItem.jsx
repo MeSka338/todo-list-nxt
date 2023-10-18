@@ -1,5 +1,5 @@
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   DoneTodoAction,
   EditTodoAction,
@@ -10,6 +10,7 @@ import {
 import s from "./TodoItem.module.scss";
 
 const TodoItem = ({ item }) => {
+  const DoneTrigger = useSelector((store) => store.DoneTrigger);
   const dispatch = useDispatch();
 
   const removeHandler = (t) => {
@@ -17,7 +18,18 @@ const TodoItem = ({ item }) => {
   };
 
   const doneTask = () => {
+    let timeout;
     dispatch(DoneTodoAction(item));
+    if (item.checked) {
+      clearTimeout(timeout);
+      dispatch({ type: "TRUE_DONE", payload: true });
+      // console.log(DoneTrigger);
+
+      timeout = setTimeout(() => {
+        dispatch({ type: "TRUE_DONE", payload: false });
+        // console.log(DoneTrigger);
+      }, 3000);
+    }
   };
 
   const edit = () => {

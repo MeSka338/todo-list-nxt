@@ -3,9 +3,11 @@ import { composeWithDevTools } from "redux-devtools-extension";
 import thunk from "redux-thunk";
 import TodoReducer from "./reducers/TodoReducers";
 import InputReducer from "./reducers/InputReducer";
+import DoneTriggerReducer from "./reducers/DoneTriggerReducer";
 const reduser = combineReducers({
   Todo: TodoReducer,
   Input: InputReducer,
+  DoneTrigger: DoneTriggerReducer,
 });
 
 const initialState = {};

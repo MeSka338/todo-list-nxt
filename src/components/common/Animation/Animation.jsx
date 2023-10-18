@@ -1,15 +1,8 @@
 import React, { useRef } from "react";
 import { Canvas, useThree, useFrame } from "@react-three/fiber";
 import s from "./Animation.module.scss";
-import {
-  OrbitControls,
-  Points,
-  Point,
-  useTexture,
-  Text3D,
-  Center,
-} from "@react-three/drei";
-import { useDispatch } from "react-redux";
+import { Points, Point, useTexture, Text3D, Center } from "@react-three/drei";
+import { useDispatch, useSelector } from "react-redux";
 import { Vector3 } from "three";
 
 const Rig = () => {
@@ -43,8 +36,11 @@ const MyText = () => {
   );
 };
 const Particles = () => {
+  const { doneTrigger } = useSelector((state) => state.DoneTrigger);
+
   const ref = useRef();
   const circle = useTexture("/circle.png");
+
   const pointArray = [];
   for (let i = 0; i < 1000; i++) {
     pointArray.push([
@@ -56,13 +52,19 @@ const Particles = () => {
 
   return (
     <Points>
-      <pointsMaterial color={"black"} transparent ref={ref} map={circle} />
+      <pointsMaterial
+        color={doneTrigger ? "green" : "black"}
+        transparent
+        ref={ref}
+        map={circle}
+      />
       {pointArray.map((item, key) => {
         return <Point position={[item[0], item[1], item[2]]} key={key} />;
       })}
     </Points>
   );
 };
+
 const Animation = () => {
   return (
     <div className={s.root}>
