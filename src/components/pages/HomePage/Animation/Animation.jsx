@@ -53,7 +53,7 @@ const Particles = () => {
   return (
     <Points>
       <pointsMaterial
-        color={doneTrigger ? "green" : "black"}
+        color={doneTrigger ? "green" : "white"}
         transparent
         ref={ref}
         map={circle}
