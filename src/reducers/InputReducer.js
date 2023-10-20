@@ -1,7 +1,7 @@
-const InputReducer = (state = { text: null }, action) => {
+const InputReducer = (state = { selectInput: null }, action) => {
   switch (action.type) {
     case "SET_INPUT":
-      return { text: action.payload };
+      return { selectInput: action.payload };
     default:
       return state;
   }
