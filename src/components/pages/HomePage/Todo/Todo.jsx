@@ -63,7 +63,7 @@ const Todo = () => {
             className={`${s.todo_form__sellectAll} ${s.button}`}
             onClick={() => dispatch(DoneAllTodoAction(mode, setMode))}
           >
-            <img src="/arrow.svg" alt="arrow" />
+            <img src="icons/arrow.svg" alt="arrow" />
           </button>
           <input
             type="text"

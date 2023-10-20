@@ -5,7 +5,7 @@ const MyText = () => {
   return (
     <Center position={[0, 3, 0]} rotation={[Math.PI / 10, 0, 0]}>
       <Text3D
-        font={"/font.json"}
+        font={"fonts/font.json"}
         curveSegments={32}
         bevelEnabled
         bevelSize={0.04}

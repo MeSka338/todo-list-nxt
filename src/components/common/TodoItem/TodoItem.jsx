@@ -84,7 +84,7 @@ const TodoItem = ({ item }) => {
         }
         onClick={() => dispatch(RemoveTodoAction(item))}
       >
-        <img src="/close.svg" alt="rem"></img>
+        <img src="icons/close.svg" alt="rem"></img>
       </button>
     </li>
   );

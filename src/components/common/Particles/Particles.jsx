@@ -16,7 +16,7 @@ const Particles = () => {
   const { doneTrigger } = useSelector((state) => state.DoneTrigger);
 
   const ref = useRef();
-  const circle = useTexture("/circle.png");
+  const circle = useTexture("textures/circle.png");
 
   return (
     <Points>
