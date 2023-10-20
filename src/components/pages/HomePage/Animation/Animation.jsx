@@ -15,6 +15,10 @@ const Animation = () => {
         <MyText />
         <CameraRig />
         {/* <OrbitControls /> */}
+
+        <pointLight position={[0, 0, 0]} intensity={10} />
+        <pointLight position={[2, 2, 0]} intensity={10} />
+        <pointLight position={[2, 2, 7]} intensity={10} />
       </Canvas>
     </div>
   );

@@ -1,4 +1,5 @@
 import { Text3D, Center } from "@react-three/drei";
+import * as THREE from "three";
 
 const MyText = () => {
   return (
@@ -15,7 +16,7 @@ const MyText = () => {
         size={0.5}
       >
         TODOS
-        <meshNormalMaterial />
+        <meshStandardMaterial color={new THREE.Color("blue")} />
       </Text3D>
     </Center>
   );
