@@ -1,28 +1,49 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { UnEditTodoAction } from "@/actions/TodoActions";
 import {
-  removeHandler,
-  doneTask,
-  edit,
-  handleChange,
-  setInput,
-} from "./TodoItemFunctions";
+  UnEditTodoAction,
+  RemoveTodoAction,
+  DoneTodoAction,
+  EditTodoAction,
+  EditTextAction,
+} from "@/actions/TodoActions";
 
 import s from "./TodoItem.module.scss";
 
 const TodoItem = ({ item }) => {
   const dispatch = useDispatch();
 
+  let timeout;
+
+  const doneTask = () => {
+    dispatch(DoneTodoAction(item));
+    if (item.checked) {
+      clearTimeout(timeout);
+      dispatch({ type: "SET_DONE", payload: true });
+
+      timeout = setTimeout(() => {
+        dispatch({ type: "SET_DONE", payload: false });
+      }, 3000);
+    }
+  };
+
+  const setInput = (e) => {
+    dispatch({ type: "SET_INPUT", payload: e.target });
+  };
+
   return (
     <li
       className={
         item.edit ? `${s.todo_item} ${s.todo_item_edit}` : `${s.todo_item}`
       }
-      onClick={(e) => setInput(dispatch, e)}
+      onClick={(e) => setInput(e)}
       onKeyPress={(e) => {
         if (e.key === "Enter" && item.edit) {
-          dispatch(UnEditTodoAction());
+          if (item.text === "") {
+            dispatch(RemoveTodoAction(item));
+          } else {
+            dispatch(UnEditTodoAction(e));
+          }
         }
       }}
     >
@@ -47,8 +68,8 @@ const TodoItem = ({ item }) => {
       <input
         type="text"
         value={item.text}
-        onChange={(e) => handleChange(dispatch, item, e)}
-        onDoubleClick={() => edit(dispatch, item)}
+        onChange={(e) => dispatch(EditTextAction(e, item))}
+        onDoubleClick={() => dispatch(EditTodoAction(item))}
         readOnly={item.edit ? false : true}
         className={
           item.checked
@@ -61,7 +82,7 @@ const TodoItem = ({ item }) => {
         className={
           item.edit ? `${s.edit}` : `${s.todo_item__remove} ${s.button}`
         }
-        onClick={() => removeHandler(dispatch, item)}
+        onClick={() => dispatch(RemoveTodoAction(item))}
       >
         <img src="/close.svg" alt="rem"></img>
       </button>

@@ -1,15 +1,19 @@
-export const AddTodoAction = (todo) => (dispatch, getState) => {
+export const AddTodoAction = (e, newTodo, input) => (dispatch, getState) => {
+  e.preventDefault();
+
   const {
     Todo: { todos },
   } = getState();
 
-  if (todo.text !== "") {
+  if (newTodo.text !== "") {
     dispatch({
       type: "ADD_TODO",
-      payload: [todo, ...todos],
+      payload: [newTodo, ...todos],
     });
   }
-  localStorage.setItem("todos", JSON.stringify([todo, ...todos]));
+  localStorage.setItem("todos", JSON.stringify([newTodo, ...todos]));
+
+  input.current.value = "";
 };
 
 export const RemoveComplitedAction = () => (dispatch, getState) => {
@@ -60,25 +64,31 @@ export const DoneTodoAction = (todo) => (dispatch, getState) => {
   localStorage.setItem("todos", JSON.stringify(todos));
 };
 
-export const DoneAllTodoAction = (mode) => (dispatch, getState) => {
+export const DoneAllTodoAction = (mode, setMode) => (dispatch, getState) => {
   const {
     Todo: { todos },
   } = getState();
-  if (mode === true) {
-    todos.forEach((item) => {
-      item.checked = true;
-    });
-  } else if (mode === false) {
-    todos.forEach((item) => {
-      item.checked = false;
-    });
-  }
-  dispatch({
-    type: "DONE_ALL_TODO",
-    payload: [...todos],
-  });
 
-  localStorage.setItem("todos", JSON.stringify(todos));
+  if (todos.length !== 0) {
+    setMode((current) => !current);
+
+    if (mode === true) {
+      todos.forEach((item) => {
+        item.checked = true;
+      });
+    } else if (mode === false) {
+      todos.forEach((item) => {
+        item.checked = false;
+      });
+    }
+    dispatch({
+      type: "DONE_ALL_TODO",
+      payload: [...todos],
+    });
+
+    localStorage.setItem("todos", JSON.stringify(todos));
+    console.log("work");
+  }
 };
 
 export const EditTodoAction = (todo) => (dispatch, getState) => {
@@ -107,6 +117,7 @@ export const UnEditTodoAction = () => (dispatch, getState) => {
   todos.forEach((item) => {
     item.edit = false;
   });
+
   dispatch({
     type: "UNEDIT_TODO",
     payload: [...todos],
@@ -115,7 +126,9 @@ export const UnEditTodoAction = () => (dispatch, getState) => {
   localStorage.setItem("todos", JSON.stringify(todos));
 };
 
-export const EditTextAction = (todo) => (dispatch, getState) => {
+export const EditTextAction = (e, todo) => (dispatch, getState) => {
+  todo.text = e.target.value;
+
   const {
     Todo: { todos },
   } = getState();
