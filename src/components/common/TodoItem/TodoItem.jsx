@@ -30,16 +30,18 @@ const TodoItem = ({ item }) => {
         type="checkbox"
         className={s.todo_item__checked}
         name="checked"
-        id={"checked" + item.id}
+        id={item.id}
         defaultChecked={item.checked ? true : false}
         onClick={() => doneTask(dispatch, item)}
       />
       <label
-        htmlFor={"checked" + item.id}
+        htmlFor={item.id}
         className={item.edit ? `${s.edit}` : s.fake_checked}
       >
         <span
-          className={item.checked ? `${s.check} ${s.check_edit}` : `${s.check}`}
+          className={
+            item.checked ? `${s.check} ${s.check_check}` : `${s.check}`
+          }
         ></span>
       </label>
       <input
@@ -50,7 +52,7 @@ const TodoItem = ({ item }) => {
         readOnly={item.edit ? false : true}
         className={
           item.checked
-            ? `${s.todo_item__value} ${s.todo_item__value_edit}`
+            ? `${s.todo_item__value} ${s.todo_item__value_checked}`
             : `${s.todo_item__value} `
         }
       ></input>

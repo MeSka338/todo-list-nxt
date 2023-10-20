@@ -36,4 +36,6 @@ export const saveEdit = (e, text, dispatch) => {
   if (e.target !== text) {
     dispatch(UnEditTodoAction());
   }
+
+  console.log(e.target);
 };

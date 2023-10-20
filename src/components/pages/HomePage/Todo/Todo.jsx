@@ -31,10 +31,12 @@ const Todo = () => {
   }, []);
 
   return (
-    <>
+    <div onClick={(e) => saveEdit(e, text, dispatch)}>
       <section
         className={s.todoApp}
-        onClick={(e) => saveEdit(e, text, dispatch)}
+        onClick={(e) => {
+          console.log(e.target);
+        }}
       >
         <div className={s.todos}>
           <form
@@ -73,15 +75,20 @@ const Todo = () => {
               <p className={s.todos_count}>{todos.length} items</p>
               <div className={s.todos_pages}>
                 <button
-                  className={s.page}
+                  className={
+                    filter === 0 ? `${s.page}  ${s.page__active}` : `${s.page} `
+                  }
                   onClick={() => {
                     setFilter(0);
                   }}
                 >
+                  {" "}
                   ALL
                 </button>
                 <button
-                  className={s.page}
+                  className={
+                    filter === 1 ? `${s.page} ${s.page__active}` : `${s.page}`
+                  }
                   onClick={() => {
                     setFilter(1);
                   }}
@@ -89,7 +96,9 @@ const Todo = () => {
                   Active
                 </button>
                 <button
-                  className={s.page}
+                  className={
+                    filter === 2 ? `${s.page} ${s.page__active}` : `${s.page}`
+                  }
                   onClick={() => {
                     setFilter(2);
                   }}
@@ -107,7 +116,7 @@ const Todo = () => {
           </ul>
         </div>
       </section>
-    </>
+    </div>
   );
 };
 
